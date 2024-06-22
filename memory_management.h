@@ -2,36 +2,30 @@
 #define MEMORY_MANAGEMENT_H
 
 #include "memory_node.h"
+#include <iostream>
 #include <list>
 
 class MemoryManagement{
     private:
         const int startingMemory; // 256 KB memory available to be given
     public:
+        
         int totalMemoryAvailable;
-        int nodesTraversed;
         // LL to hold memory
-        std::list<MemoryNode> systemMemory;
-        // Constructor
-        MemoryManagement(int memory) : startingMemory(memory), totalMemoryAvailable(startingMemory), nodesTraversed(0) {
-            // Calculate number of nodes based on totalMemoryAvailable and nodeSize
-            int numberOfNodes = totalMemoryAvailable / MemoryNode::nodeSize;
+        // std::list<MemoryNode> systemMemory;
 
-            // Populate the systemMemory list with nodes
-            for (int i = 0; i < numberOfNodes; ++i) {
-                systemMemory.emplace_back(-1, i * MemoryNode::nodeSize);
-            }
-        }
-        // Destructor
+        MemoryManagement(int memory) : startingMemory(memory), totalMemoryAvailable(startingMemory) {}
         ~MemoryManagement() {};
 
-        void memoryAvailable(int units) { totalMemoryAvailable -= units * MemoryNode::nodeSize; }
-        void printMemoryList() const;
-        int allocate_mem(int, int);
+        // Change this function to be two separate functions
+        // First function will be first fit
+        // Second function will be best fit
+        // maybe keep function
+        void memoryAvailable(int units, MemoryNode node) { totalMemoryAvailable -= units * node.getNodeSize(); }
+        
+        int allocate_mem (int, int);
         int deallocate_mem (int);
         int fragment_count();
-        int firstFitAlgorithm(int, int);
-        int bestFitAlgorithm(int, int);
 };
 
 #endif

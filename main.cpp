@@ -1,43 +1,44 @@
 #include "routine.h"
 #include "memory_management.h"
 
+// BRAINSTORMING SECTION
+/*
+FIRST FIT AND BEST FIT
+PAGE 190 in BOOK
+
+Linked List will have 256 KB total, divided into 2 KB units
+Process can request 3-10 Units (6-20 KB)
+
+Each slot in memory gets:
+- Process ID
+- Value KB
+*/
+
+
 int main(){
 
     // Creating new memory object and initializing the max total memory available to 256 KB
-    MemoryManagement* firstFitMemory = new MemoryManagement(256);
+    MemoryManagement memory(256);
+    MemoryNode node(2, 1);
     // ******************* Change this to a Memory linked list ************************
     // populate list with nodes
 
-    std::cout << "--- Total memory available: " << firstFitMemory->totalMemoryAvailable << "KB ---\n\n";
-    /*/* ******************************* FOR TESTING PURPOSES *********************************
+    std::cout << "--- Total memory available: " << memory.totalMemoryAvailable << "KB ---\n\n";
+    /* ******************************* FOR TESTING PURPOSES ********************************* */
     std::cout << "Allocating 3 units of memory\n";
-    //firstFitMemory->memoryAvailable(3);
-    std::cout << "--- Total memory available: " << firstFitMemory->totalMemoryAvailable << "KB ---\n\n";
+    memory.memoryAvailable(3, node);
+    std::cout << "--- Total memory available: " << memory.totalMemoryAvailable << "KB ---\n\n";
+
     std::cout << "Deallocating 10 units of memory\n";
-    //firstFitMemory->memoryAvailable(-10);
-    std::cout << "--- Total memory available: " << firstFitMemory->totalMemoryAvailable << "KB ---\n\n";
-    *********************************** END TESTING ************************************** */
+    memory.memoryAvailable(-10, node);
+    std::cout << "--- Total memory available: " << memory.totalMemoryAvailable << "KB ---\n\n";
+    /* *********************************** END TESTING ************************************** */
 
     // ******************* For loop to create a process. Run 10,000 times ************************
-    // ************** NOTE: CURRENT LOOPS RUN 20 TIMES. CHANGE VAR IN ROUTINE_H ******************
-    for (int i = 0; i < numRequests; i++) {
-        simulate_first_fit(*firstFitMemory);
-    }
-
-    MemoryManagement* bestFitMemory = new MemoryManagement(256);
-    for (int i = 0; i < numRequests; i++) {
-        simulate_best_fit(*bestFitMemory);
-    }
-
-    std::cout << "-------------- FIRST FIT --------------\n";
-    firstFitMemory->printMemoryList();
-    std::cout << "-------------- BEST FIT --------------\n";
-    bestFitMemory->printMemoryList();
+    create_process(memory);
 
     // print stats
     print_stats();
     // nice exit message
     std::cout << "Ending program\n";
-    delete firstFitMemory;
-    delete bestFitMemory;
 }
