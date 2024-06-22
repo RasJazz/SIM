@@ -7,7 +7,7 @@
 #include <unistd.h>
 
 const int numProcesses = 4;
-std::vector<Process*> processes;
+extern std::vector<Process*> processes;
 
 void create_process();
 void cleanup_process();
