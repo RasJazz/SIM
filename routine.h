@@ -12,10 +12,10 @@
 #include <vector>
 
 const int numProcesses = 4;
-const int numRequests = 100;
+const int numRequests = 20;
 
-void create_process(MemoryManagement&);
-int randomNumber();
+void simulate_first_fit(MemoryManagement&);
+void simulate_best_fit(MemoryManagement&);
 // create stats function
 void print_stats();
 
