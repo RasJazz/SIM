@@ -4,12 +4,12 @@
 # Aeron Flores (826123084) and Jasmine Rasmussen (129935517)
 # Edoras #s: Aeron - CSSC4404; Jasmine - CSSC4427 
 ###########################################################
-EXEC = dsh
-FILES = main.cpp execute_file.cpp start_process.cpp
-HEADERS = xsh_shell.h 
+EXEC = sim
+FILES = main.cpp memory_management.cpp process.cpp routine.cpp
+HEADERS = memory_management.h process.h routine.h
 CC = g++
-LFLAGS = -g #-pthread
-CFLAGS = -g -c #-pthread
+LFLAGS = -g
+CFLAGS = -g -c
 OBJECTS = $(FILES:.cpp=.o)
 
 $(EXEC):$(OBJECTS)
@@ -19,11 +19,14 @@ $(EXEC):$(OBJECTS)
 .cpp.o:
 	$(CC) $(CFLAGS) $<
 
-execute_file.o: execute_file.cpp xsh_shell.h 
-	$(CC) $(CFLAGS) execute_file.cpp 
+memory_management.o: memory_management.cpp memory_management.h
+	$(CC) $(CFLAGS) memory_management.cpp
 
-start_file.o: start_process.cpp xsh_shell.h 
-	$(CC) $(CFLAGS) start_process.cpp 
+process.o: process.cpp process.h 
+	$(CC) $(CFLAGS) process.cpp 
+
+routine.o: routine.cpp routine.h 
+	$(CC) $(CFLAGS) routine.cpp 
 
 clean:
 	rm -f *.o $(EXEC)

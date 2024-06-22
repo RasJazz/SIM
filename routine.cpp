@@ -4,10 +4,10 @@
 void create_process()
 {
     std::cout << "Creating " << numProcesses << " processes!\n";
-    Process newProcess;
+    //Process newProcess;
 }
 
-void wait_process()
+void cleanup_process()
 {
     std::cout << "Waiting processes\n";
 }
