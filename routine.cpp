@@ -1,6 +1,6 @@
 #include "routine.h"
 
-void create_process(MemoryManagement& memory)
+void simulate_first_fit(MemoryManagement& memory)
 {
     // Fork a process
     pid_t newProcess = fork();
@@ -11,19 +11,59 @@ void create_process(MemoryManagement& memory)
     }
     // Child process
     else if (newProcess == 0){
-        std::cout << "New Child Process " << getpid() << "\n";
+        std::cout << "Child Process " << getpid() << " started\n\n";
+        //sleep(1);
         exit(0);
     }
     else {
-        std::cout << "New Parent Process " << getpid() << "\n";
+        std::cout << "Parent Process " << getpid() << " is waiting...\n";
+        waitpid(newProcess, NULL, 0);
+        std::cout << "Allocating memory for Child process " << newProcess <<  " using First Fit...\n";
+        
+        memory.nodesTraversed = memory.firstFitAlgorithm(10, newProcess);
+        std::cout << "Nodes traversed: " << memory.nodesTraversed << "\n\n";
+        //memory.printMemoryList();
+        // if (success) {
+        //     std::cout << "Memory successfully allocated for process ID: " << newProcess << "\n";
+        //     memory.printMemoryList();
+        // } 
+        // else {
+        //     std::cerr << "Failed to allocate memory for process ID: " << newProcess << "\n";
+        // }
     }
-
-    waitpid(newProcess, NULL, 0);
 }
 
-int randomNumber()
+void simulate_best_fit(MemoryManagement& memory)
 {
-    return 0;
+    // Fork a process
+    pid_t newProcess = fork();
+
+    if (newProcess < 0) {
+        std::cerr << "Error creating new process\n";
+        std::exit(EXIT_FAILURE);
+    }
+    // Child process
+    else if (newProcess == 0){
+        std::cout << "Child Process " << getpid() << " started\n\n";
+        //sleep(1);
+        exit(0);
+    }
+    else {
+        std::cout << "Parent Process " << getpid() << " is waiting...\n";
+        waitpid(newProcess, NULL, 0);
+        std::cout << "Allocating memory for Child process " << newProcess <<  " using Best Fit...\n";
+        
+        memory.nodesTraversed = memory.bestFitAlgorithm(10, newProcess);
+        std::cout << "Nodes traversed: " << memory.nodesTraversed << "\n\n";
+        // memory.printMemoryList();
+        // if (success) {
+        //     std::cout << "Memory successfully allocated for process ID: " << newProcess << "\n";
+        //     memory.printMemoryList();
+        // } 
+        // else {
+        //     std::cerr << "Failed to allocate memory for process ID: " << newProcess << "\n";
+        // }
+    }
 }
 
 void print_stats()
