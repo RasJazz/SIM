@@ -9,36 +9,6 @@ Assignment 3, README
 
 ---
 
-------------------- DELETE THIS WHEN DONE -------------------
-
-# TO-DO
-
-- Figure out functionality of processes
-    - We want to give them each a linked list that can exist for life of process
-    - implement memory functions
-        - ***allocate***
-            - specifies the following:
-                - process id of the process for which memory is requested
-                - the number of memory units being requested
-                - **assume that memory is requested for each process only once**
-        - ***deallocate***
-            - process id of the process whose memory has to be deallocated
-            - assume that the entire memory allocated to a process is deallocated on a deallocation request
-        - ***fragment***
-            - returns the number of holes (fragments of sizes 1 or 2 units)
-    - **NOTE: EACH PROCESS MUST BE 3-10 UNITS LONG (min 3 nodes, max 10 nodes)**
-
-- Stats report
-    1. average number of external fragments
-    2. average allocation time in terms of the average number of nodes traversed in allocation
-    3. the percentage of times an allocation request is denied
-    - Generate stats for each individual process
-    - Generate stats for all processes total
-
-Run your simulation generating 10,000 requests using the request generation component, and for each request, invoke the appropriate function of the Memory component for each of the memory allocation/deallocation technique. After every request, update the three performance parameters for each of the techniques.
-
--------------------------------------------------------------
-
 ### Overview
 
 ---
