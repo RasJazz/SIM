@@ -1,3 +1,5 @@
 a3.code-workspace
 sim
 .vscode/settings.json
+.vscode/launch.json
+.vscode/tasks.json
