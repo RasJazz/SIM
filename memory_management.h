@@ -14,8 +14,7 @@ class MemoryManagement{
         ~MemoryManagement() {};
 
         // altering memory
-        // rename this function
-        void manageMemory(int units) { totalMemoryAvailable -= units * memoryUnit; }
+        void memoryAvailable(int units) { totalMemoryAvailable -= units * memoryUnit; }
         
         int allocate_mem (int, int);
         int deallocate_mem (int);
