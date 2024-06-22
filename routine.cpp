@@ -1,6 +1,6 @@
 #include "routine.h"
 
-void create_process(MemoryManagement& memory, std::vector<pid_t>& processes)
+void create_process(MemoryManagement& memory)
 {
     // Fork a process
     pid_t newProcess = fork();
@@ -12,7 +12,6 @@ void create_process(MemoryManagement& memory, std::vector<pid_t>& processes)
     // Child process
     else if (newProcess == 0){
         std::cout << "New Child Process " << getpid() << "\n";
-        processes.push_back(newProcess);
         exit(0);
     }
     else {

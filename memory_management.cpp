@@ -28,3 +28,24 @@ int MemoryManagement::fragment_count()
     // returns the number of holes (fragments of sizes 1 or 2 units).
     return 0;
 }
+
+// FIRST FIT ALGORITHM:
+//      have variable to save first available spot
+//          FOR LOOP: 
+//              Search through linked list
+//              if there is a spot, check next x amount of nodes
+//                  if all nodes free
+//                  save location
+//          END FOR
+//      place process in the location
+
+// BEST FIT ALGORITHM:
+//      memorySlot = infinity
+//      counter = 0
+//          FOR LOOP: Search through entire linked list
+//              if there is a spot, check next x amount of nodes
+//                  if all nodes free AND counter < memorySlot
+//                      memorySlot = counter
+//                      save locations    
+//          END FOR
+//      place process in the location

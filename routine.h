@@ -13,11 +13,8 @@
 
 const int numProcesses = 4;
 const int numRequests = 100;
-extern std::vector<pid_t> processes;
-// LL to hold memory
-// std::list<int> memoryAllocated;
 
-void create_process(MemoryManagement&, std::vector<pid_t>&);
+void create_process(MemoryManagement&);
 int randomNumber();
 // create stats function
 void print_stats();
