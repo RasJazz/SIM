@@ -5,8 +5,8 @@
 # Edoras #s: Aeron - CSSC4404; Jasmine - CSSC4427 
 ###########################################################
 EXEC = sim
-FILES = main.cpp memory_management.cpp process.cpp routine.cpp
-HEADERS = memory_management.h process.h routine.h
+FILES = main.cpp memory_management.cpp routine.cpp
+HEADERS = memory_management.h routine.h
 CC = g++
 LFLAGS = -g
 CFLAGS = -g -c
@@ -21,9 +21,6 @@ $(EXEC):$(OBJECTS)
 
 memory_management.o: memory_management.cpp memory_management.h
 	$(CC) $(CFLAGS) memory_management.cpp
-
-process.o: process.cpp process.h 
-	$(CC) $(CFLAGS) process.cpp 
 
 routine.o: routine.cpp routine.h 
 	$(CC) $(CFLAGS) routine.cpp 
