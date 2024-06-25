@@ -1,13 +1,11 @@
 #include "memory_management.h"
 
 int BestFit::allocateMem(int processID, int units) {
-    std::cout << "Calling Best fit\n";
-
     // Convert units to KB
     int requiredNodes = units * MemoryNode::nodeSize; 
     // This takes the max units a process can ask for, increases it by 1, and multiplies by node size
     // This way a process can be allocated to nodes
-    int bestSlotSize = (maxUnits + 1) * MemoryNode::nodeSize;;
+    int bestSlotSize = (maxUnits + 1) * MemoryNode::nodeSize;
 
     // Iterator variables
     std::list<MemoryNode>::iterator bestSlotStart = sysMemory.end(); // Iterator for linked list
