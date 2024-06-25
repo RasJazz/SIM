@@ -8,7 +8,7 @@
 struct MemoryNode {
     static constexpr int nodeSize = 2;
     int nodeAddress;
-    int processID; // -1 indicates free block
+    int processID;
 
     MemoryNode(int address, int pid) : nodeAddress(address), processID(pid) {}
 };
