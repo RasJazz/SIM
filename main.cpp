@@ -1,6 +1,7 @@
 #include "routine.h"
 #include "memory_management.h"
 
+
 int main(){
 
     // Creating new memory object and initializing the max total memory available to 256 KB
@@ -21,12 +22,12 @@ int main(){
     // ******************* For loop to create a process. Run 10,000 times ************************
     // ************** NOTE: CURRENT LOOPS RUN 20 TIMES. CHANGE VAR IN ROUTINE_H ******************
     for (int i = 0; i < numRequests; i++) {
-        simulate_first_fit(*firstFitMemory);
+        simulateFit(*firstFitMemory, FF);
     }
 
     MemoryManagement* bestFitMemory = new MemoryManagement(256);
     for (int i = 0; i < numRequests; i++) {
-        simulate_best_fit(*bestFitMemory);
+        simulateFit(*bestFitMemory, BF);
     }
 
     std::cout << "-------------- FIRST FIT --------------\n";

@@ -12,7 +12,7 @@ class MemoryManagement{
         int nodesTraversed;
         // LL to hold memory
         std::list<MemoryNode> systemMemory;
-        // Constructor
+        // Constructor initializes linked list
         MemoryManagement(int memory) : startingMemory(memory), totalMemoryAvailable(startingMemory), nodesTraversed(0) {
             // Calculate number of nodes based on totalMemoryAvailable and nodeSize
             int numberOfNodes = totalMemoryAvailable / MemoryNode::nodeSize;
@@ -27,9 +27,9 @@ class MemoryManagement{
 
         void memoryAvailable(int units) { totalMemoryAvailable -= units * MemoryNode::nodeSize; }
         void printMemoryList() const;
-        int allocate_mem(int, int);
-        int deallocate_mem (int);
-        int fragment_count();
+        int allocateMem(int, int);
+        int deallocateMem (int);
+        int fragmentCount();
         int firstFitAlgorithm(int, int);
         int bestFitAlgorithm(int, int);
 };

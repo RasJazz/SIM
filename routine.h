@@ -11,11 +11,12 @@
 #include <unistd.h>
 #include <vector>
 
+// FF = First Fit, BF = Best Fit
+enum fitType{ FF = 0, BF = 1};
 const int numProcesses = 4;
 const int numRequests = 20;
 
-void simulate_first_fit(MemoryManagement&);
-void simulate_best_fit(MemoryManagement&);
+void simulateFit(MemoryManagement&, int);
 // create stats function
 void print_stats();
 
