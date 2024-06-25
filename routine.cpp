@@ -22,7 +22,7 @@ void simulateFit(MemoryManagement& memory, int fitType)
         waitpid(newProcess, NULL, 0);
         std::cout << "Allocating memory for Child process " << newProcess;
         
-        int tempNode = 0;
+        int nodesTraversed = 0;
 
         //change first parameter to randnum between 3 and 10
         if(fitType == 0){
@@ -30,7 +30,7 @@ void simulateFit(MemoryManagement& memory, int fitType)
             
             FirstFit ffobj;
 
-            tempNode = ffobj.allocateMem(newProcess, memory.unitsAllocated, memory);
+            nodesTraversed = ffobj.allocateMem(newProcess, memory.unitsAllocated, memory);
             //tempNode = memory.firstFitAlgorithm(10, newProcess);
         }
         else {
@@ -38,14 +38,14 @@ void simulateFit(MemoryManagement& memory, int fitType)
 
             BestFit bfobj;
 
-            tempNode = bfobj.allocateMem(newProcess, memory.unitsAllocated, memory);
+            nodesTraversed = bfobj.allocateMem(newProcess, memory.unitsAllocated, memory);
             //tempNode = memory.bestFitAlgorithm(10, newProcess);
         }
         
-        memory.nodesTraversed = tempNode;
+        memory.nodesTraversed = nodesTraversed;
         std::cout << "Nodes traversed: " << memory.nodesTraversed << "\n";
-        std::cout << "Units allocated: " << memory.unitsAllocated << "\n\n";
-        //memory.printMemoryList();
+        // std::cout << "Units allocated: " << memory.unitsAllocated << "\n\n";
+        // memory.printMemoryList();
         // if (success) {
         //     std::cout << "Memory successfully allocated for process ID: " << newProcess << "\n";
         //     memory.printMemoryList();

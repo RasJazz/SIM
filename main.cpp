@@ -27,8 +27,11 @@ int main(){
     // ************** NOTE: CURRENT LOOPS RUN 20 TIMES. CHANGE VAR IN ROUTINE_H ******************
     
     for (int i = 0; i < numRequests; i++) {
+        // USE RAN GENERATOR?
+        // if 0, call allocation
         firstFitMemory->unitsAllocated = distrib(gen);
         simulateFit(*firstFitMemory, FF);
+        // else, if 1, call deallocation
     }
 
     MemoryManagement* bestFitMemory = new MemoryManagement(256);

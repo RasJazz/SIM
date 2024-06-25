@@ -11,7 +11,7 @@ class FirstFit : Fit{
 
             // Iterator variables
             auto bestSlotStart = memory.systemMemory.end(); // Iterator to store the start of the best fit slot
-            int firstSlotSize = maxUnits; // Size of the first available slot found
+            int firstSlotSize = (maxUnits + 1) * MemoryNode::nodeSize; // Size of the first available slot found
 
             auto it = memory.systemMemory.begin();
             while (it != memory.systemMemory.end()) {

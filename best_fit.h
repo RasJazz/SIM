@@ -9,7 +9,9 @@ class BestFit : Fit{
             // Convert units to KB
             int requiredNodes = units * MemoryNode::nodeSize; 
             int nodesTraversed = 0;
-            int bestSlotSize = maxUnits;
+            // This takes the max units a process can ask for, increases it by 1, and multiplies by node size
+            // This way a process can be allocated to nodes
+            int bestSlotSize = (maxUnits + 1) * MemoryNode::nodeSize;;
 
             // Iterator variables
             std::list<MemoryNode>::iterator bestSlotStart = memory.systemMemory.end(); // Iterator for linked list
