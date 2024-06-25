@@ -11,12 +11,13 @@ class MemoryManagement{
     public:
         std::vector<int> processIDTable;
         int totalMemoryAvailable;
-        int nodesTraversed;
-        int unitsAllocated;
+        int nodesTraversed = 0;
+        int unitsAllocated = 0;
+        int successRateDealloc = 0;
         // LL to hold memory
         std::list<MemoryNode> systemMemory;
         // Constructor initializes linked list
-        MemoryManagement(int memory) : startingMemory(memory), totalMemoryAvailable(startingMemory), nodesTraversed(0), unitsAllocated(0) {
+        MemoryManagement(int memory) : startingMemory(memory), totalMemoryAvailable(startingMemory){
             // Calculate number of nodes based on totalMemoryAvailable and nodeSize
             int numberOfNodes = totalMemoryAvailable / MemoryNode::nodeSize;
 
