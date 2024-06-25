@@ -27,11 +27,8 @@ class MemoryManagement{
 
         void memoryAvailable(int units) { totalMemoryAvailable -= units * MemoryNode::nodeSize; }
         void printMemoryList() const;
-        int allocateMem(int, int);
         int deallocateMem (int);
         int fragmentCount();
-        int firstFitAlgorithm(int, int);
-        int bestFitAlgorithm(int, int);
 };
 
 #endif
