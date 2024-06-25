@@ -3,11 +3,13 @@
 
 #include "memory_node.h"
 #include <list>
+#include <vector>
 
 class MemoryManagement{
     private:
         const int startingMemory; // 256 KB memory available to be given
     public:
+        std::vector<int> processIDTable;
         int totalMemoryAvailable;
         int nodesTraversed;
         int unitsAllocated;

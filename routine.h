@@ -16,6 +16,7 @@ enum fitType{ FF = 0, BF = 1};
 const int numRequests = 20;
 const int minUnits = 3;
 const int maxUnits = 10;
+const int deallocationInterval = 5;
 
 void simulateFit(MemoryManagement&, int);
 int deallocateMem(int);

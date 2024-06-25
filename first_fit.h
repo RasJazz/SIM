@@ -51,12 +51,17 @@ class FirstFit : Fit{
 
                 // If all units are allocated, update memory available
                 if (units == 0) {
+                    // Add process ID to table
+                    memory.processIDTable.push_back(processID);
+
+                    // Calculate remaining memory available
                     memory.memoryAvailable(requiredNodes / MemoryNode::nodeSize);
                     std::cout << "Memory successfully allocated using First Fit. Total memory available: " << memory.totalMemoryAvailable << " KB\n";
                     return nodesTraversed;
                 }
             }
 
+            // Else, no slots available
             std::cout << "Error: Not enough memory slots available for " << units << " units.\n";
             return -1;
         }
