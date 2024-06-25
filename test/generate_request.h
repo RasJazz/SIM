@@ -11,7 +11,7 @@ class Request {
         bool isAlloc; // true for allocation, false for deallocation
 };
 
-enum allocationRequestions{ allocate, deallocate };
+enum allocationRequests{ allocate, deallocate };
 
 std::vector<Request> generateRequests(int);
 
