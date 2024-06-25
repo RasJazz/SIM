@@ -13,10 +13,13 @@
 
 // FF = First Fit, BF = Best Fit
 enum fitType{ FF = 0, BF = 1};
-const int numProcesses = 4;
-const int numRequests = 20;
+const int numRequests = 5;
+const int minUnits = 3;
+const int maxUnits = 10;
 
 void simulateFit(MemoryManagement&, int);
+int deallocateMem(int);
+int fragmentCount();
 // create stats function
 void print_stats();
 

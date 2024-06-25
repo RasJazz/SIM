@@ -9,7 +9,7 @@ class BestFit : Fit{
             // Convert units to KB
             int requiredNodes = units * MemoryNode::nodeSize; 
             int nodesTraversed = 0;
-            int bestSlotSize = std::numeric_limits<int>::max();
+            int bestSlotSize = maxUnits;
 
             // Iterator variables
             std::list<MemoryNode>::iterator bestSlotStart = memory.systemMemory.end(); // Iterator for linked list
@@ -63,7 +63,7 @@ class BestFit : Fit{
                 if (units == 0) {
                     int allocatedNodes = requiredNodes / MemoryNode::nodeSize;
                     memory.memoryAvailable(allocatedNodes);
-                    std::cout << "Memory successfully allocated.\n" << "Total memory available: " << memory.totalMemoryAvailable << " KB\n";
+                    std::cout << "Memory successfully allocated using Best Fit.\n" << "Total memory available: " << memory.totalMemoryAvailable << " KB\n";
                     return nodesTraversed - 1;
                 }
             }

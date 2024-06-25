@@ -1,9 +1,13 @@
 #include "routine.h"
 #include "memory_management.h"
-
+#include <random>
 
 int main(){
-
+    // Creating random number generator for units to allocate
+    std::random_device rd; //seeding random number generator
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> distrib(minUnits, maxUnits);
+    
     // Creating new memory object and initializing the max total memory available to 256 KB
     MemoryManagement* firstFitMemory = new MemoryManagement(256);
     // ******************* Change this to a Memory linked list ************************
@@ -21,12 +25,16 @@ int main(){
 
     // ******************* For loop to create a process. Run 10,000 times ************************
     // ************** NOTE: CURRENT LOOPS RUN 20 TIMES. CHANGE VAR IN ROUTINE_H ******************
+    
     for (int i = 0; i < numRequests; i++) {
+        firstFitMemory->unitsAllocated = distrib(gen);
         simulateFit(*firstFitMemory, FF);
     }
 
     MemoryManagement* bestFitMemory = new MemoryManagement(256);
+    
     for (int i = 0; i < numRequests; i++) {
+        bestFitMemory->unitsAllocated = distrib(gen);
         simulateFit(*bestFitMemory, BF);
     }
 
