@@ -1,8 +1,6 @@
 #include "memory_management.h"
 
 int FirstFit::allocateMem(int processID, int units){
-    std::cout << "Calling First fit\n";
-    
     int requiredNodes = units * MemoryNode::nodeSize; // Convert units to KB
 
     // Iterator variables
