@@ -1,6 +1,7 @@
 #include "routine.h"
 #include "first_fit.h"
 #include "best_fit.h"
+#include <algorithm>
 
 void simulateFit(MemoryManagement& memory, int fitType)
 {
@@ -13,12 +14,12 @@ void simulateFit(MemoryManagement& memory, int fitType)
     }
     // Child process
     else if (newProcess == 0){
-        std::cout << "Child Process " << getpid() << " started\n\n";
+        // std::cout << "Child Process " << getpid() << " started\n\n";
         //sleep(1);
         exit(0);
     }
     else {
-        std::cout << "Parent Process " << getpid() << " is waiting...\n";
+        // std::cout << "Parent Process " << getpid() << " is waiting...\n";
         waitpid(newProcess, NULL, 0);
         std::cout << "Allocating memory for Child process " << newProcess;
         
@@ -31,7 +32,6 @@ void simulateFit(MemoryManagement& memory, int fitType)
             FirstFit ffobj;
 
             nodesTraversed = ffobj.allocateMem(newProcess, memory.unitsAllocated, memory);
-            //tempNode = memory.firstFitAlgorithm(10, newProcess);
         }
         else {
             std::cout << " using Best Fit...\n";
@@ -39,11 +39,10 @@ void simulateFit(MemoryManagement& memory, int fitType)
             BestFit bfobj;
 
             nodesTraversed = bfobj.allocateMem(newProcess, memory.unitsAllocated, memory);
-            //tempNode = memory.bestFitAlgorithm(10, newProcess);
         }
         
-        memory.nodesTraversed = nodesTraversed;
-        std::cout << "Nodes traversed: " << memory.nodesTraversed << "\n";
+        memory.nodesTraversed += nodesTraversed;
+        std::cout << "Nodes traversed: " << memory.nodesTraversed << "\n\n";
         // std::cout << "Units allocated: " << memory.unitsAllocated << "\n\n";
         // memory.printMemoryList();
         // if (success) {
@@ -57,12 +56,36 @@ void simulateFit(MemoryManagement& memory, int fitType)
 }
 
 // deallocates the memory allocated to the process whose id is process_id.
-int deallocateMem(int processID)
+int deallocateMem(MemoryManagement& fitModel, int processID)
 {
-    std::cout << "Deallocating memory from Process " << processID << "\n";
+    bool isProcessFound = false;
+    int nodesFound = 0;
+    int nodeSize = 0;
+
     // if successful, returns 1 to be stored in MemoryManagement
-    return 0;
-    // otherwise –1.
+    for(auto it = fitModel.systemMemory.begin(); it != fitModel.systemMemory.end(); ++it){
+        if (it->nodeID == processID) {
+            isProcessFound = true;
+            fitModel.memoryAvailable(it->getNodeSize());
+            //nodesFound -= it->getNodeSize();
+            it->nodeID = -1;
+        } 
+    }
+
+    if (isProcessFound) {
+        std::cout << "----------------------------------------------------\n";
+        std::cout << "Deallocating memory from Process " << processID << "\n";
+        std::cout << "----------------------------------------------------\n\n";
+        auto vecIt = std::find(fitModel.processIDTable.begin(), fitModel.processIDTable.end(), processID);
+        if (vecIt != fitModel.processIDTable.end()) { 
+            fitModel.processIDTable.erase(vecIt); 
+        }
+        fitModel.memoryAvailable(nodesFound);
+        return 1;
+    }
+    
+    std::cout << "Process " << processID << " not found!!!\n\n";
+    return -1;
 }
 
 int fragmentCount()
