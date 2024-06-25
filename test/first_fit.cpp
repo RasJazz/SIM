@@ -43,9 +43,6 @@ int FirstFit::allocateMem(int processID, int units){
 
         // If all units are allocated, update memory available
         if (units == 0) {
-            // Calculate remaining memory available
-            // memory.memoryAvailable(requiredNodes / MemoryNode::nodeSize);
-            // std::cout << "Memory successfully allocated using First Fit. Total memory available: " << memory.totalMemoryAvailable << " KB\n";
             return 1;
         }
     }
@@ -53,4 +50,17 @@ int FirstFit::allocateMem(int processID, int units){
     // Else, no slots available
     std::cout << "Error: Not enough memory slots available for " << units << " units.\n";
     return -1;
+}
+
+int FirstFit::deallocateMem(int processID) {
+    bool deallocated = false;
+
+    for (auto it = sysMemory.begin(); it != sysMemory.end(); ++it) {
+        if (it->processID == processID) {
+            it->processID = -1;
+            deallocated = true;
+        }
+    }
+
+    return deallocated ? 1 : -1;
 }

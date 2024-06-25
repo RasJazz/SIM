@@ -37,7 +37,7 @@ int main(){
         }   
     }
 
-    std::cout << "-------------- FIRST FIT --------------\n";
+    // std::cout << "-------------- FIRST FIT --------------\n";
     // firstFitMemory->printMemoryList();
     // /* ----------------------------- TESTING PROCESS ID TABLE PRINT OUT ----------------------*/
     // std::cout << "-------------- FIRST FIT PID TABLE --------------\n";
@@ -72,19 +72,26 @@ int main(){
     float fff = numRequests/firstFitMemory->nodesTraversed;
     float bff = numRequests/bestFitMemory->nodesTraversed;
     std::cout << "-------------- FIRST FIT --------------\n";
+    firstFitMemory->printMemoryList();
     std::cout << "-------------- NUMBER SUCCESSFUL ALLOCATIONS --------------\n";
     std::cout << fff << " were successful out of " << numRequests << " requests\n";
+    /* ----------------------------- TESTING PROCESS ID TABLE PRINT OUT ----------------------*/
+    std::cout << "-------------- FIRST FIT PID TABLE --------------\n";
+    for(int i : firstFitMemory->processIDTable){
+        std::cout << "Process: " << i << "\n";
+    }
+
     
     std::cout << "-------------- BEST FIT --------------\n";
-    //bestFitMemory->printMemoryList();
+    bestFitMemory->printMemoryList();
     std::cout << "-------------- NUMBER SUCCESSFUL ALLOCATIONS --------------\n";
     std::cout << bff << " were successful out of " << numRequests << " requests\n";
 
-    // /* ----------------------------- TESTING PROCESS ID TABLE PRINT OUT ----------------------*/
-    // std::cout << "-------------- BEST FIT PID TABLE --------------\n";
-    // for(int i : bestFitMemory->processIDTable){
-    //     std::cout << "Process: " << i << "\n";
-    // }
+    /* ----------------------------- TESTING PROCESS ID TABLE PRINT OUT ----------------------*/
+    std::cout << "-------------- BEST FIT PID TABLE --------------\n";
+    for(int i : bestFitMemory->processIDTable){
+        std::cout << "Process: " << i << "\n";
+    }
 
     // print stats
     print_stats();
