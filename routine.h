@@ -13,7 +13,7 @@
 
 // FF = First Fit, BF = Best Fit
 enum fitType{ FF = 0, BF = 1};
-const int numRequests = 5;
+const int numRequests = 20;
 const int minUnits = 3;
 const int maxUnits = 10;
 
