@@ -65,3 +65,16 @@ int BestFit::allocateMem(int processID, int units) {
     std::cout << "Error: Not enough memory slots available for " << units << " units.\n";
     return -1;
 }
+
+int BestFit::deallocateMem(int processID) {
+    bool deallocated = false;
+
+    for (auto it = sysMemory.begin(); it != sysMemory.end(); ++it) {
+        if (it->processID == processID) {
+            it->processID = -1;
+            deallocated = true;
+        }
+    }
+
+    return deallocated ? 1 : -1;
+}

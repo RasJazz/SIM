@@ -29,7 +29,8 @@ class MemoryManagement {
             }
         }
         
-        virtual int allocateMem(int, int) { return 0; }
+        virtual int allocateMem(int, int) = 0;
+        virtual int deallocateMem(int) = 0;
         virtual ~MemoryManagement() {}
 };
 
@@ -42,6 +43,7 @@ class FirstFit : public MemoryManagement, public Stats {
         ~FirstFit() {};
 
         int allocateMem(int, int) override;
+        int deallocateMem(int) override;
 };
 
 class BestFit : public MemoryManagement, public Stats {
@@ -53,6 +55,7 @@ class BestFit : public MemoryManagement, public Stats {
         ~BestFit() {};
 
         int allocateMem(int, int) override;
+        int deallocateMem(int) override;
 };
 
 #endif
