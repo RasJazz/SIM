@@ -32,13 +32,17 @@ class BestFit : Fit{
                     while (it != memory.systemMemory.end() && it->isFree() && currentSlotSize < requiredNodes) {
                         currentSlotSize += MemoryNode::nodeSize;
                         ++it;
-                        nodesTraversed++;
                     }
 
                     // Check if this slot is the best fit so far
                     if (currentSlotSize >= requiredNodes && currentSlotSize < bestSlotSize) {
                         bestSlotSize = currentSlotSize;
                         bestSlotStart = currentSlotStart;
+
+                        if (currentSlotSize == requiredNodes) {
+                            nodesTraversed += (currentSlotSize / MemoryNode::nodeSize);
+                            break;
+                        }
                     }
 
                     // Move the iterator to the next node if not at the end
@@ -63,14 +67,16 @@ class BestFit : Fit{
 
                 // If all units are allocated, update memory available
                 if (units == 0) {
-                    int allocatedNodes = requiredNodes / MemoryNode::nodeSize;
-                    memory.memoryAvailable(allocatedNodes);
+                    // Add process ID to table
+                    memory.processIDTable.push_back(processID);
+
+                    memory.memoryAvailable(requiredNodes / MemoryNode::nodeSize);
                     std::cout << "Memory successfully allocated using Best Fit.\n" << "Total memory available: " << memory.totalMemoryAvailable << " KB\n";
                     return nodesTraversed - 1;
                 }
             }
 
-            // If no suitable slot was found
+            // Else, no slots available
             std::cout << "Error: Not enough memory slots available for " << units << " units.\n";
             return -1;
         }
