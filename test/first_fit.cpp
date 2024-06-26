@@ -21,8 +21,9 @@ int FirstFit::allocateMem(int processID, int units){
                 ++it;
             }
 
-            // Allocate memory if the slot is large enough
+            // If the current block size is as big as/bigger than the required nodes
             if (currentSlotSize >= requiredNodes) {
+                // Assigns block with process ID until all nodes taken by process
                 for (auto allocIt = currentSlotStart; allocIt != sysMemory.end() && units > 0; ++allocIt) {
                     if (allocIt->processID == emptyNode) {
                         allocIt->processID = processID;

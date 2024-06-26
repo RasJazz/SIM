@@ -9,7 +9,7 @@ FILES = main.cpp best_fit.cpp first_fit.cpp generate_request.cpp stats.cpp
 HEADERS = generate_request.h memory_management.h stats.h
 CC = g++
 LFLAGS = -g
-CFLAGS = -g -c
+CFLAGS = -g -c -std=c++11
 OBJECTS = $(FILES:.cpp=.o)
 
 $(EXEC):$(OBJECTS)

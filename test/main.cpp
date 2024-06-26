@@ -23,6 +23,7 @@ int main() {
     auto requests = generator.generateRequests(numRequests);
 
     for(const auto& request : requests){
+        // If requested generated is allocation, allocate process to memory
         if(request.isAlloc){
             // std::cout << "---------------------------------------------------\n";
             // std::cout << "ALLOCATING PROCESS " << request.processID << "\n";
@@ -33,6 +34,7 @@ int main() {
             nodesTraversed = bestFit.allocateMem(request.processID, request.unitsRequested);
             // std::cout << "BEST FIT Nodes traversed: " << nodesTraversed << "\n\n";
         }
+        // else, request generated was a deallocation
         else {
             // std::cout << "---------------------------------------------------\n";
             std::cout << "DEALLOCATING PROCESS " << request.processID << "\n";
