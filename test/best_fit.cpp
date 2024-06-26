@@ -90,29 +90,21 @@ int BestFit::fragmentCount() {
     int fragmentCount = 0;
 
     // Assuming sysMemory is a linked list of nodes
-    auto current = sysMemory.begin();
-
-    while (current != sysMemory.end()) {
-        if (current->processID == -1) {
-            auto next = std::next(current); // Check the next node
-            if (next != sysMemory.end() && next->processID == -1) {
-                auto nextNext = std::next(next); // Check the node after the next node
-                if (nextNext == sysMemory.end() || nextNext->processID != -1) {
-                    // If the next node exists and is also empty, count as a fragment
-                    fragmentCount++;
-                    current = std::next(next); // Move the current iterator two nodes ahead
-                } else {
-                    current = std::next(current); // Move to the next node
+     auto it = sysMemory.begin();
+    while (it != sysMemory.end()) {
+        if (it->processID == -1) {
+            fragmentCount++;
+            ++it; // Move to next node
+            if (it != sysMemory.end() && it->processID == -1) {
+                // Skip over contiguous -1 nodes
+                while (it != sysMemory.end() && it->processID == -1) {
+                    ++it;
                 }
-            } else {
-                fragmentCount++;
-                current = std::next(current); // Move to the next node
             }
         } else {
-            current = std::next(current); // Move to the next node
+            ++it;
         }
     }
-
     return fragmentCount;
     
 }

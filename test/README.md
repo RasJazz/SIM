@@ -13,11 +13,15 @@ Assignment 3, README
 
 ---
 
-Sim is a program that (CHANGE ME):
-- **(CHANGE ME)**
-	- (CHANGE ME)
-- **(CHANGE ME)**
-	- (CHANGE ME)
+Sim is a program that simulates memory allocation/deallocation using four built in functions:
+- **best_fit**
+	- lets users allocate and deallocate memory based on the best fit algorithm and also uses the fragment_count class to count for fragments in memory.
+- **first_fit**
+	- lets users allocate and deallocate memory based on the first fit algorithm and also uses the fragment_count class to count for fragments in memory.
+- **generate_request**
+	- includes random number generation for allocation and deallocation.
+- **stats**
+	- gives results of statistics based on best fit and first fit.
 
 ### Files Included
 
@@ -26,13 +30,14 @@ Sim is a program that (CHANGE ME):
 Files/Folders included in `a3.zip`:
 - `README.md`: Details on the program and how to run it
 - `Makefile`: Makefile used to compile the `sim` executable
-- `(CHANGE ME).h`: (CHANGE ME)
-- `(CHANGE ME).cpp`: (CHANGE ME)
-- `(CHANGE ME).cpp`: (CHANGE ME)
-- `(CHANGE ME).cpp`: (CHANGE ME)
-- `(CHANGE ME)`: (CHANGE ME)
-- `(CHANGE ME)`: (CHANGE ME)
-- `(CHANGE ME)`: (CHANGE ME)
+- `best_fit.cpp`: Function for best fit algorithm
+- `first_fit.cpp`: Function for the first fit algorithm
+- `generate_request.cpp`: Generates the numbers for the processes in allocation/deallocation
+- `generate_request.h`: Header file for generate_request.cpp
+- `main.cpp`: Main source file that outputs results for first fit and best fit based on the number of requests.
+- `memory_management.h`: Header file for memory_management.cpp
+- `stats.cpp`: Gives all the statistics for the best and first fit
+- `stats.h`: Header file for stats.cpp
 
 ### Compile instructions
 
@@ -80,17 +85,18 @@ Command `make clean` will remove any generated object files and executables.
 
 ---
 
-###### (CHANGE ME)
+###### Modular Design
 
-(CHANGE ME)
 
-###### (CHANGE ME)
+The project is organized into multiple source files, each handling specific parts of the sim functionality. This modular design helps with code readability, maintainability, and the facilitation of easier debugging and testing.
 
-(CHANGE ME)
+###### Random Request Generation
 
-###### (CHANGE ME)
+Random values are generated for determining the amount of units per thread which are repeated that many times. The number generated is always between 3 to 10 but will not allocate if there is not enough memory.
 
-(CHANGE ME)
+###### Separate Memory Components for First Fit and Best Fit
+
+First Fit and Best Fit are separate classes that are easier to modify without affecting the other because they are different algorithms.
 
 ### Other Features
 
@@ -102,22 +108,23 @@ Command `make clean` will remove any generated object files and executables.
 
 ---
 
-- **(CHANGE ME):** (CHANGE ME)
+- **Memory Fragmentation Not Correctly Merged:** The fragment_count function might return excessive fragmentation or have a lack of memory.
 
-- **(CHANGE ME):** (CHANGE ME) 
+- **Incorrect Handling of Edge Cases in Allocation:** The allocation function has the possibility of not correctly handling edge cases like when the memory is full or only small fragments are available.
 
 
 ### Lessons Learned
 
 ---
 
-- **(CHANGE ME):** (CHANGE ME)
+- **Effective Collaboration and Teamwork:** Working in pairs for this assignment showed the need for clear communication and working together on tasks. We learned that regular code reviews and pair programming sessions on the Discord app can greatly enhance code quality and team productivity.There was a lot of debugging and problem solving done by us that required good teamwork.
 
-- **(CHANGE ME):** (CHANGE ME)
+- **Emphasis of Efficient Data Structures:** In this project, using a linked list for managing memory blocks was an effective choice since it allowed dynamic memory allocation/deallocation. It was not an easy task to figure out fragmentation and traversing the list for allocation requests.
 
-- **(CHANGE ME):** (CHANGE ME)
+- **Good Error Handling and Edge Case Management:** It is important in implementation to handle edge cases like fully occupied memory or unusable fragments which could lead to errors or crashes. Implementing error handling makes sure the code is stable.
 
-- **(CHANGE ME):** (CHANGE ME)
+- **Modularity and Separating Requirements:** Since we separated the memory management logic of First Fit and Best Fit from the request generation and stats components, the program was easier to get an understanding of for testing and modifications. The modular approach gives independent testing of each component and also provided clarity.
+- **Documentation and Commenting:** Providing clear comments and documentation was very useful in organizing the code for more clarity so that both of us could understand the code.
 
 
 ### Code Creation

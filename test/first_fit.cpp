@@ -78,11 +78,19 @@ int FirstFit::fragmentCount() {
     // , check the current node, the next node, and the next node's next node
     
     // Assuming sysMemory is a linked list of nodes
-    auto current = sysMemory.begin();
-
-    for (const auto& node : memoryList) {
-        if (node.processID == -1 && (node.size == 1 || node.size == 2)) {
+    auto it = sysMemory.begin();
+    while (it != sysMemory.end()) {
+        if (it->processID == -1) {
             fragmentCount++;
+            ++it; // Move to next node
+            if (it != sysMemory.end() && it->processID == -1) {
+                // Skip over contiguous -1 nodes
+                while (it != sysMemory.end() && it->processID == -1) {
+                    ++it;
+                }
+            }
+        } else {
+            ++it;
         }
     }
 
