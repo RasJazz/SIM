@@ -7,12 +7,12 @@
 */ 
 #include "memory_management.h"
 
-int BestFit::allocateMem(int processID, int units) {
+int BestFit::allocateMem(int processID, int units){
     // Convert units to KB
     int requiredNodes = units * MemoryNode::nodeSize; 
     // This takes the max units a process can ask for, increases it by 1, and multiplies by node size
     // This way a process can be allocated to nodes
-    int bestSlotSize = (maxUnits + 1) * MemoryNode::nodeSize;
+    int bestSlotSize = sysMemory.size();
 
     // Iterator variables
     std::list<MemoryNode>::iterator bestSlotStart = sysMemory.end(); // Iterator for linked list
@@ -40,10 +40,6 @@ int BestFit::allocateMem(int processID, int units) {
                 bestSlotStart = currentSlotStart;
             }
 
-            // Move the iterator to the next node if not at the end
-            if (it != sysMemory.end()) {
-                ++it;
-            }
         } 
         // Move to the next node if current node is not free
         else {
@@ -105,7 +101,6 @@ int BestFit::fragmentCount() {
             ++it;
         }
     }
-    return fragmentCount;
-    
+    return fragmentCount; 
 }
 

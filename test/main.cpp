@@ -16,10 +16,11 @@ int main() {
     const int numRequests = 10000;
     int nodesTraversed;
 
+    Request generator;
     FirstFit firstFit;
     BestFit bestFit;
 
-    auto requests = generateRequests(numRequests);
+    auto requests = generator.generateRequests(numRequests);
 
     for(const auto& request : requests){
         if(request.isAlloc){

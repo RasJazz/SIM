@@ -27,14 +27,14 @@
 //     return requests;
 // }
 
-std::vector<Request> generateRequests(int numRequests) {
+std::vector<Request> Request::generateRequests(int numRequests) {
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
     std::default_random_engine generator(seed);
-    std::uniform_int_distribution<int> unitDistributionStats(Stats().minUnits, Stats().maxUnits);
+    std::uniform_int_distribution<int> unitDistributionStats(minUnits, maxUnits);
     std::uniform_int_distribution<int> decisionDistribution(0, 1); // 0 for deallocation, 1 for allocation
 
-    std::vector<Request> requests;
-    std::set<int> allocatedProcesses;
+    // std::vector<Request> requests;
+    // std::set<int> allocatedProcesses;
 
     for (int i = 0; i < numRequests; ++i) {
         int processID = i + 1;

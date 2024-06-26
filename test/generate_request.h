@@ -10,16 +10,26 @@
 
 #include <random>
 #include <vector>
-
-class Request {
-    public:
-        int processID;
-        int unitsRequested;
-        bool isAlloc; // true for allocation, false for deallocation
-};
+#include <set>
 
 enum allocationRequests{ allocate, deallocate };
 
-std::vector<Request> generateRequests(int);
+class Request {
+    private:
+        std::vector<Request> requests;
+        std::set<int> allocatedProcesses;
+    public:
+        const int minUnits;
+        const int maxUnits;
+        int processID;
+        int unitsRequested;
+        bool isAlloc; // true for allocation, false for deallocation
+
+        Request() : minUnits(3), maxUnits(10), processID(0), unitsRequested(0), isAlloc(0) {}    
+        Request(int id, int units, bool alloc) 
+            : minUnits(3), maxUnits(10), processID(id), unitsRequested(units), isAlloc(alloc) {}
+        
+        std::vector<Request> generateRequests(int);
+};
 
 #endif

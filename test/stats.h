@@ -10,7 +10,7 @@
 
 #include <iostream>
 
-class Statistics {
+class Stats {
 private:
     int totalRequests;
     int deniedRequests;
@@ -18,14 +18,13 @@ private:
     int totalFragments;
 
 public:
-    Statistics() : totalRequests(0), deniedRequests(0), totalNodesTraversed(0), totalFragments(0) {}
+    // const int minUnits;
+    // const int maxUnits;
 
-    void log_request(int, bool);
+    Stats() : totalRequests(0), deniedRequests(0), totalNodesTraversed(0), totalFragments(0) {}
 
-    void log_fragments(int);
-
-    void print_stats();
+    void logRequest(int, bool);
+    void logFragments(int);
+    void printStats();
 };
-
-void printStats();
 #endif

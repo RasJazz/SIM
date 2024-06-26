@@ -13,7 +13,7 @@
 #include <list>
 
 struct MemoryNode {
-    static constexpr int nodeSize = 2;
+    static const int nodeSize = 2;
     int nodeAddress;
     int processID;
 
@@ -22,13 +22,16 @@ struct MemoryNode {
 
 class MemoryManagement {
     private:
-        const int startingMemory = 256; // 256 KB memory available to be given
+        const int startingMemory;
     public:
         std::list<MemoryNode> systemMemory;
-        int emptyNode;
+        const int minUnits;
+        const int maxUnits;
+        const int emptyNode;
         int totalMemoryAvailable;
-        
-        MemoryManagement () : totalMemoryAvailable(startingMemory), emptyNode(-1) {
+
+        MemoryManagement () : minUnits(3), maxUnits(10), 
+            startingMemory(256), emptyNode(-1), totalMemoryAvailable(startingMemory) {
             int nodeSize = MemoryNode::nodeSize;
 
             for (int i = 0; i < startingMemory/nodeSize; i++){
@@ -43,32 +46,32 @@ class MemoryManagement {
         virtual ~MemoryManagement() {}
 };
 
-class FirstFit : public MemoryManagement, public Stats {
+class FirstFit : public MemoryManagement{
     public:
         std::list<MemoryNode> sysMemory;
+
         FirstFit () : MemoryManagement() {
-            sysMemory = MemoryManagement::systemMemory;
+            sysMemory = systemMemory;
         };
         ~FirstFit() {};
 
         int allocateMem(int, int) override;
         int deallocateMem(int) override;
         int fragmentCount() override;
-
 };
 
-class BestFit : public MemoryManagement, public Stats {
+class BestFit : public MemoryManagement{
     public:
         std::list<MemoryNode> sysMemory;
+        
         BestFit () : MemoryManagement() {
-            sysMemory = MemoryManagement::systemMemory;
+            sysMemory = systemMemory;
         };
         ~BestFit() {};
 
         int allocateMem(int, int) override;
         int deallocateMem(int) override;
         int fragmentCount() override;
-
 };
 
 #endif
