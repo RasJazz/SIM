@@ -39,6 +39,7 @@ class MemoryManagement {
         virtual int allocateMem(int, int) = 0;
         virtual int deallocateMem(int) = 0;
         virtual int fragmentCount() = 0;
+
         virtual ~MemoryManagement() {}
 };
 
@@ -53,6 +54,7 @@ class FirstFit : public MemoryManagement, public Stats {
         int allocateMem(int, int) override;
         int deallocateMem(int) override;
         int fragmentCount() override;
+
 };
 
 class BestFit : public MemoryManagement, public Stats {
@@ -66,6 +68,7 @@ class BestFit : public MemoryManagement, public Stats {
         int allocateMem(int, int) override;
         int deallocateMem(int) override;
         int fragmentCount() override;
+
 };
 
 #endif

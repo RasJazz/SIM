@@ -116,3 +116,4 @@ int BestFit::fragmentCount() {
     return fragmentCount;
     
 }
+
