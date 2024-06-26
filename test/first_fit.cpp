@@ -1,3 +1,10 @@
+/*
+ ******************* Assignment #3: SIM ********************
+ ******************* CS480, Summer 2024 ******************** 
+ Aeron Flores (826123084) and Jasmine Rasmussen (129935517)
+ ***** Edoras #s: Aeron - CSSC4404; Jasmine - CSSC4427 ***** 
+ ******************** first_fit.cpp ********************
+*/ 
 #include "memory_management.h"
 
 int FirstFit::allocateMem(int processID, int units){
@@ -63,4 +70,22 @@ int FirstFit::deallocateMem(int processID) {
     }
 
     return deallocated ? 1 : -1;
+}
+
+int FirstFit::fragmentCount() {
+    int fragmentCount = 0;
+    // This function needs to iterate through a linked list 
+    // , check the current node, the next node, and the next node's next node
+    
+    // Assuming sysMemory is a linked list of nodes
+    auto current = sysMemory.begin();
+
+    for (const auto& node : memoryList) {
+        if (node.processID == -1 && (node.size == 1 || node.size == 2)) {
+            fragmentCount++;
+        }
+    }
+
+    return fragmentCount;
+
 }

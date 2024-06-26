@@ -1,3 +1,10 @@
+/*
+ ******************* Assignment #3: SIM ********************
+ ******************* CS480, Summer 2024 ******************** 
+ Aeron Flores (826123084) and Jasmine Rasmussen (129935517)
+ ***** Edoras #s: Aeron - CSSC4404; Jasmine - CSSC4427 ***** 
+ ******************** memory_management.h ********************
+*/ 
 #ifndef MEMORY_MANAGEMENT_H
 #define MEMORY_MANAGEMENT_H
 
@@ -31,6 +38,7 @@ class MemoryManagement {
         
         virtual int allocateMem(int, int) = 0;
         virtual int deallocateMem(int) = 0;
+        virtual int fragmentCount() = 0;
         virtual ~MemoryManagement() {}
 };
 
@@ -44,6 +52,7 @@ class FirstFit : public MemoryManagement, public Stats {
 
         int allocateMem(int, int) override;
         int deallocateMem(int) override;
+        int fragmentCount() override;
 };
 
 class BestFit : public MemoryManagement, public Stats {
@@ -56,6 +65,7 @@ class BestFit : public MemoryManagement, public Stats {
 
         int allocateMem(int, int) override;
         int deallocateMem(int) override;
+        int fragmentCount() override;
 };
 
 #endif
