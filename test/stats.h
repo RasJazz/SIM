@@ -10,12 +10,21 @@
 
 #include <iostream>
 
-class Stats {
-    private:
-        /* data */
-    public:
-        int minUnits = 3;
-        int maxUnits = 10;
+class Statistics {
+private:
+    int totalRequests;
+    int deniedRequests;
+    int totalNodesTraversed;
+    int totalFragments;
+
+public:
+    Statistics() : totalRequests(0), deniedRequests(0), totalNodesTraversed(0), totalFragments(0) {}
+
+    void log_request(int, bool);
+
+    void log_fragments(int);
+
+    void print_stats();
 };
 
 void printStats();

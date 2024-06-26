@@ -64,5 +64,4 @@ int main() {
     std::cout << "Number of fragments: " << firstFit.fragmentCount() << "\n";
     std::cout << "-------------------- BEST FIT NUMBER OF FRAGMENTS ----------------------\n";
     std::cout << "Number of fragments: " << bestFit.fragmentCount() << "\n";
-
 }
