@@ -1,3 +1,10 @@
+/*
+ ******************* Assignment #3: SIM ********************
+ ******************* CS480, Summer 2024 ******************** 
+ Aeron Flores (826123084) and Jasmine Rasmussen (129935517)
+ ***** Edoras #s: Aeron - CSSC4404; Jasmine - CSSC4427 ***** 
+ ******************** main.cpp ********************
+*/ 
 #include <iostream>
 #include "memory_management.h"
 #include "stats.h"
@@ -52,4 +59,9 @@ int main() {
     for(auto node : bestFit.sysMemory){
         std::cout << "Node Address: " << node.nodeAddress << " Process ID: " << node.processID << "\n";
     }
+
+    std::cout << "-------------------- FIRST FIT NUMBER OF FRAGMENTS ----------------------\n";
+    std::cout << "Number of fragments: " << firstFit.fragmentCount() << "\n";
+    std::cout << "-------------------- BEST FIT NUMBER OF FRAGMENTS ----------------------\n";
+    std::cout << "Number of fragments: " << bestFit.fragmentCount() << "\n";
 }

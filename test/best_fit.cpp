@@ -1,3 +1,10 @@
+/*
+ ******************* Assignment #3: SIM ********************
+ ******************* CS480, Summer 2024 ******************** 
+ Aeron Flores (826123084) and Jasmine Rasmussen (129935517)
+ ***** Edoras #s: Aeron - CSSC4404; Jasmine - CSSC4427 ***** 
+ ******************** best_fit.cpp ********************
+*/ 
 #include "memory_management.h"
 
 int BestFit::allocateMem(int processID, int units) {
@@ -78,3 +85,27 @@ int BestFit::deallocateMem(int processID) {
 
     return deallocated ? 1 : -1;
 }
+
+int BestFit::fragmentCount() {
+    int fragmentCount = 0;
+
+    // Assuming sysMemory is a linked list of nodes
+     auto it = sysMemory.begin();
+    while (it != sysMemory.end()) {
+        if (it->processID == -1) {
+            fragmentCount++;
+            ++it; // Move to next node
+            if (it != sysMemory.end() && it->processID == -1) {
+                // Skip over contiguous -1 nodes
+                while (it != sysMemory.end() && it->processID == -1) {
+                    ++it;
+                }
+            }
+        } else {
+            ++it;
+        }
+    }
+    return fragmentCount;
+    
+}
+

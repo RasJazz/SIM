@@ -1,6 +1,6 @@
 ###########################################################
 # Makefile for CS480, Summer 2024
-# Assignment #3: XSH
+# Assignment #3: SIM
 # Aeron Flores (826123084) and Jasmine Rasmussen (129935517)
 # Edoras #s: Aeron - CSSC4404; Jasmine - CSSC4427 
 ###########################################################
