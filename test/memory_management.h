@@ -30,8 +30,8 @@ class MemoryManagement {
         const int emptyNode;
         int totalMemoryAvailable;
 
-        MemoryManagement () : minUnits(3), maxUnits(10), 
-            startingMemory(256), emptyNode(-1), totalMemoryAvailable(startingMemory) {
+        MemoryManagement () : startingMemory(256), minUnits(3), maxUnits(10), 
+            emptyNode(-1), totalMemoryAvailable(startingMemory) {
             int nodeSize = MemoryNode::nodeSize;
 
             for (int i = 0; i < startingMemory/nodeSize; i++){
@@ -39,7 +39,7 @@ class MemoryManagement {
             }
         }
         
-        virtual int allocateMem(int, int) = 0;
+        virtual int allocateMem(int, int, Stats&) = 0;
         virtual int deallocateMem(int) = 0;
         virtual int fragmentCount() = 0;
 
@@ -55,7 +55,7 @@ class FirstFit : public MemoryManagement{
         };
         ~FirstFit() {};
 
-        int allocateMem(int, int) override;
+        int allocateMem(int, int, Stats&) override;
         int deallocateMem(int) override;
         int fragmentCount() override;
 };
@@ -69,7 +69,7 @@ class BestFit : public MemoryManagement{
         };
         ~BestFit() {};
 
-        int allocateMem(int, int) override;
+        int allocateMem(int, int, Stats&) override;
         int deallocateMem(int) override;
         int fragmentCount() override;
 };

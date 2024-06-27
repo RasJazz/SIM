@@ -3,28 +3,27 @@
  ******************* CS480, Summer 2024 ******************** 
  Aeron Flores (826123084) and Jasmine Rasmussen (129935517)
  ***** Edoras #s: Aeron - CSSC4404; Jasmine - CSSC4427 ***** 
- ******************** stats.h ********************
+ ************************* stats.h *************************
 */ 
 #ifndef STATS_H
 #define STATS_H
 
 #include <iostream>
+#include <list>
 
 class Stats {
 private:
-    int totalRequests;
-    int deniedRequests;
-    int totalNodesTraversed;
-    int totalFragments;
+    double totalRequests;
+    double deniedRequests;
+    double totalFragments;
 
 public:
-    // const int minUnits;
-    // const int maxUnits;
+    double totalNodesTraversed;
 
-    Stats() : totalRequests(0), deniedRequests(0), totalNodesTraversed(0), totalFragments(0) {}
+    Stats() : totalRequests(0), deniedRequests(0), totalFragments(0), totalNodesTraversed(0.0){}
 
-    void logRequest(int, bool);
-    void logFragments(int);
+    void logRequest(double);
+    void logFragments(double, double);
     void printStats();
 };
 #endif

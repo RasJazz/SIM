@@ -7,39 +7,38 @@
 */ 
 #include "memory_management.h"
 
-int BestFit::allocateMem(int processID, int units){
-    // Convert units to KB
+int BestFit::allocateMem(int processID, int units, Stats& nodesTraversed) {
+    // The number of units requested by a process * the unit size (in KB)
     int requiredNodes = units * MemoryNode::nodeSize; 
-    // This takes the max units a process can ask for, increases it by 1, and multiplies by node size
+    // This takes the max units a process can ask for and multiplies by node size
     // This way a process can be allocated to nodes
-    int bestSlotSize = sysMemory.size();
-
-    // Iterator variables
-    std::list<MemoryNode>::iterator bestSlotStart = sysMemory.end(); // Iterator for linked list
-    // Loop through memory list using iterators
+    int smallestBlockSize = sysMemory.size() * MemoryNode::nodeSize;
+    double tempTraversed = 0.0;
+    
     auto it = sysMemory.begin();
-
-    // while the list end has not been reached
+    std::list<MemoryNode>::iterator smallestBlockStart = sysMemory.end(); // Iterator for linked list
+    
+    // Loop tuntil the end of the memory list is reached
     while (it != sysMemory.end()) {
-        // Check if the current slot is free and large enough
+        tempTraversed++;
+        // Check if the current block is free and large enough
         if (it->processID == emptyNode) {
-            int currentSlotSize = 0;
-            auto currentSlotStart = it;
+            int currentBlockSize = 0;
+            auto currentBlockStart = it;
 
-            // Calculate the size of contiguous free memory slots
-            // If we're not at the end of the list, the slot is free, and the slot size is less than
-            // number nodes needed, temporarily save slot size
-            while (it != sysMemory.end() && it->processID == emptyNode && currentSlotSize < requiredNodes) {
-                currentSlotSize += MemoryNode::nodeSize;
+            // Calculate the size of contiguous free memory blocks
+            // If we're not at the end of the list, the block is free, and the block size is less than
+            // number nodes needed, temporarily save block size
+            while (it != sysMemory.end() && it->processID == emptyNode && currentBlockSize <= requiredNodes) {
+                currentBlockSize += MemoryNode::nodeSize;
                 ++it;
             }
 
-            // Check if this slot is the best fit so far
-            if (currentSlotSize >= requiredNodes && currentSlotSize < bestSlotSize) {
-                bestSlotSize = currentSlotSize;
-                bestSlotStart = currentSlotStart;
+            // Checks if the block is smaller than previously saved
+            if (currentBlockSize >= requiredNodes && currentBlockSize < smallestBlockSize) {
+                smallestBlockSize = currentBlockSize;
+                smallestBlockStart = currentBlockStart;
             }
-
         } 
         // Move to the next node if current node is not free
         else {
@@ -47,25 +46,24 @@ int BestFit::allocateMem(int processID, int units){
         }
     }
 
-    // Allocate memory if a suitable slot was found
-    if (bestSlotStart != sysMemory.end()) {
-        for (auto it = bestSlotStart; it != sysMemory.end() && units > 0; ++it) {
+    // Allocate memory if a suitable block was found
+    if (smallestBlockStart != sysMemory.end()) {
+        // Assigns block with process ID until all nodes taken by process
+        for (auto it = smallestBlockStart; it != sysMemory.end() && units > 0; ++it) {
             if (it->processID == emptyNode) {
                 it->processID = processID;
                 units--;
             }
         }
 
-        // If all units are allocated, update memory available
+        // If all units are allocated, allocation was successful
         if (units == 0) {
-            //memory.memoryAvailable(requiredNodes / MemoryNode::nodeSize);
-            //std::cout << "Memory successfully allocated using Best Fit.\n" << "Total memory available: " << memory.totalMemoryAvailable << " KB\n";
+            nodesTraversed.totalNodesTraversed += tempTraversed;
             return 1;
         }
     }
 
-    // Else, no slots available
-    std::cout << "Error: Not enough memory slots available for " << units << " units.\n";
+    // If no blocks were found, return error code
     return -1;
 }
 
