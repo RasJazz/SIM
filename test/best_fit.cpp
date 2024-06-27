@@ -1,9 +1,9 @@
 /*
  ******************* Assignment #3: SIM ********************
  ******************* CS480, Summer 2024 ******************** 
- Aeron Flores (826123084) and Jasmine Rasmussen (129935517)
+  Aeron Flores (826123084) and Jasmine Rasmussen (129935517)
  ***** Edoras #s: Aeron - CSSC4404; Jasmine - CSSC4427 ***** 
- ******************** best_fit.cpp ********************
+ ********************** best_fit.cpp ***********************
 */ 
 #include "memory_management.h"
 
@@ -83,19 +83,24 @@ int BestFit::deallocateMem(int processID) {
 int BestFit::fragmentCount() {
     int fragmentCount = 0;
 
-    // Assuming sysMemory is a linked list of nodes
-     auto it = sysMemory.begin();
+    // Loop through memory list to find fragments of size 1 or 2
+    auto it = sysMemory.begin();
     while (it != sysMemory.end()) {
+        // If node is empty, checks successor node
         if (it->processID == -1) {
             fragmentCount++;
-            ++it; // Move to next node
+            ++it; 
+            
+            // If successor node is not the end of the list and is empty
             if (it != sysMemory.end() && it->processID == -1) {
-                // Skip over contiguous -1 nodes
+                // Skips over contiguous -1 nodes
                 while (it != sysMemory.end() && it->processID == -1) {
                     ++it;
                 }
             }
-        } else {
+        } 
+        // Otherwise, advance to next node
+        else {
             ++it;
         }
     }
