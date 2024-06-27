@@ -7,7 +7,7 @@
 */ 
 #include "memory_management.h"
 
-int BestFit::allocateMem(int processID, int units){
+int BestFit::allocateMem(int processID, int units, Stats nodesTraversed){
     // Convert units to KB
     int requiredNodes = units * MemoryNode::nodeSize; 
     // This takes the max units a process can ask for, increases it by 1, and multiplies by node size
@@ -32,6 +32,7 @@ int BestFit::allocateMem(int processID, int units){
             while (it != sysMemory.end() && it->processID == emptyNode && currentSlotSize < requiredNodes) {
                 currentSlotSize += MemoryNode::nodeSize;
                 ++it;
+                nodesTraversed.addNodesTraversed();
             }
 
             // Check if this slot is the best fit so far
@@ -44,6 +45,7 @@ int BestFit::allocateMem(int processID, int units){
         // Move to the next node if current node is not free
         else {
             ++it;
+            nodesTraversed.addNodesTraversed();
         }
     }
 

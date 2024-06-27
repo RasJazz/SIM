@@ -6,12 +6,15 @@
  ******************** first_fit.cpp ********************
 */ 
 #include "memory_management.h"
+#include "stats.h"
 
-int FirstFit::allocateMem(int processID, int units){
+int FirstFit::allocateMem(int processID, int units, Stats nodesTraversed){
     int requiredNodes = units * MemoryNode::nodeSize; // Convert units to KB
 
     auto it = sysMemory.begin();
     while (it != sysMemory.end()) {
+        nodesTraversed.addNodesTraversed();
+        
         if (it->processID == emptyNode) {
             int currentSlotSize = 0;
             auto currentSlotStart = it;
@@ -39,6 +42,7 @@ int FirstFit::allocateMem(int processID, int units){
         } else {
             ++it;
         }
+        
     }
 
     // Else, no slots available

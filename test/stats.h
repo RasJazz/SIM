@@ -9,22 +9,23 @@
 #define STATS_H
 
 #include <iostream>
+#include <list>
 
 class Stats {
 private:
-    int totalRequests;
-    int deniedRequests;
-    int totalNodesTraversed;
-    int totalFragments;
+    double totalRequests;
+    double deniedRequests;
+    
+    double totalFragments;
 
 public:
-    // const int minUnits;
-    // const int maxUnits;
+    double totalNodesTraversed;
 
-    Stats() : totalRequests(0), deniedRequests(0), totalNodesTraversed(0), totalFragments(0) {}
+    Stats() : totalRequests(0), deniedRequests(0), totalNodesTraversed(0.0), totalFragments(0) {}
 
-    void logRequest(int, bool);
-    void logFragments(int);
+    void logRequest(double);
+    void logFragments(double, double);
     void printStats();
+    void addNodesTraversed();
 };
 #endif

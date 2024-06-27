@@ -7,22 +7,32 @@
 */ 
 #include "stats.h"
 
-void Stats::logRequest(int nodesTraversed, bool success) {
+void Stats::logRequest(double isSuccessful) {
+    // Holds overall number of requests
     totalRequests++;
-    totalNodesTraversed += nodesTraversed;
-    if (!success) deniedRequests++;
+    // If allocation returned a value of -1
+    // , record allocation unsuccessful
+    
+    if(isSuccessful == -1) {
+        deniedRequests++;
+    }
 }
 
-void Stats::logFragments(int fragments) {
+void Stats::logFragments(double fragments, double memory) {
+    fragments = fragments / memory;
     totalFragments += fragments;
 }
 
 void Stats::printStats() {
-    double averageFragments = static_cast<double>(totalFragments) / totalRequests;
-    double averageNodesTraversed = static_cast<double>(totalNodesTraversed) / totalRequests;
-    double allocationDeniedPercentage = static_cast<double>(deniedRequests) / totalRequests * 100.0;
+    double averageFragments = totalFragments / totalRequests;
+    double averageNodesTraversed = totalNodesTraversed / totalRequests;
+    double allocationDeniedPercentage = deniedRequests / totalRequests * 100.0;
 
     std::cout << "Average Number of External Fragments: " << averageFragments << "\n";
     std::cout << "Average Allocation Time (nodes traversed): " << averageNodesTraversed << "\n";
     std::cout << "Percentage of Allocation Requests Denied: " << allocationDeniedPercentage << "%\n";
+}
+
+void Stats::addNodesTraversed() {
+    totalNodesTraversed += 1.00;
 }

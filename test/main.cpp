@@ -14,9 +14,11 @@
 
 int main() {
     const int numRequests = 10000;
-    int nodesTraversed;
+    int returnCode;
 
     Request generator;
+    Stats ffStats;
+    Stats bfStats;
     FirstFit firstFit;
     BestFit bestFit;
 
@@ -28,11 +30,16 @@ int main() {
             // std::cout << "---------------------------------------------------\n";
             // std::cout << "ALLOCATING PROCESS " << request.processID << "\n";
             // std::cout << "---------------------------------------------------\n";
-            nodesTraversed = firstFit.allocateMem(request.processID, request.unitsRequested);
-            // std::cout << "FIRST FIT Nodes traversed: " << nodesTraversed << "\n";
+            returnCode = firstFit.allocateMem(request.processID, request.unitsRequested, ffStats);
+            ffStats.logRequest(returnCode);
+            ffStats.logFragments(firstFit.fragmentCount(), firstFit.sysMemory.size());
+            //ffStats.logFragments(static_cast<double>(firstFit.fragmentCount()) / static_cast<double>(firstFit.sysMemory.size()));
+            // std::cout << "FIRST FIT Nodes traversed: " << returnCode << "\n";
 
-            nodesTraversed = bestFit.allocateMem(request.processID, request.unitsRequested);
-            // std::cout << "BEST FIT Nodes traversed: " << nodesTraversed << "\n\n";
+            returnCode = bestFit.allocateMem(request.processID, request.unitsRequested, bfStats);
+            bfStats.logRequest(returnCode);
+            bfStats.logFragments(bestFit.fragmentCount(), bestFit.sysMemory.size());
+            // std::cout << "BEST FIT Nodes traversed: " << returnCode << "\n\n";
         }
         // else, request generated was a deallocation
         else {
@@ -54,17 +61,19 @@ int main() {
     // it will go down the list and count the number of fragments sizes 1 or 2
     
     std::cout << "-------------------- FIRST FIT ----------------------\n";
-    for(auto node : firstFit.sysMemory){
-        std::cout << "Node Address: " << node.nodeAddress << " Process ID: " << node.processID << "\n";
-    }
+    // for(auto node : firstFit.sysMemory){
+    //     std::cout << "Node Address: " << node.nodeAddress << " Process ID: " << node.processID << "\n";
+    // }
+    ffStats.printStats();
 
     std::cout << "-------------------- BEST FIT ----------------------\n";
-    for(auto node : bestFit.sysMemory){
-        std::cout << "Node Address: " << node.nodeAddress << " Process ID: " << node.processID << "\n";
-    }
+    // for(auto node : bestFit.sysMemory){
+    //     std::cout << "Node Address: " << node.nodeAddress << " Process ID: " << node.processID << "\n";
+    // }
+    bfStats.printStats();
 
-    std::cout << "-------------------- FIRST FIT NUMBER OF FRAGMENTS ----------------------\n";
-    std::cout << "Number of fragments: " << firstFit.fragmentCount() << "\n";
-    std::cout << "-------------------- BEST FIT NUMBER OF FRAGMENTS ----------------------\n";
-    std::cout << "Number of fragments: " << bestFit.fragmentCount() << "\n";
+    // std::cout << "-------------------- FIRST FIT NUMBER OF FRAGMENTS ----------------------\n";
+    // std::cout << "Number of fragments: " << firstFit.fragmentCount() << "\n";
+    // std::cout << "-------------------- BEST FIT NUMBER OF FRAGMENTS ----------------------\n";
+    // std::cout << "Number of fragments: " << bestFit.fragmentCount() << "\n";
 }
