@@ -15,6 +15,7 @@
 int main() {
     const int numRequests = 10000;
     int returnCode;
+    int success;
 
     Request generator;
     Stats ffStats;
@@ -22,58 +23,41 @@ int main() {
     FirstFit firstFit;
     BestFit bestFit;
 
+    // Pre-generated requests that contains the following:
+    // *** whether a process should be allocated or deallocated
+    // *** the number of units to allocate/deallocate
+    // *** the generated process ID
     auto requests = generator.generateRequests(numRequests);
 
     for(const auto& request : requests){
         // If requested generated is allocation, allocate process to memory
         if(request.isAlloc){
-            // std::cout << "---------------------------------------------------\n";
-            // std::cout << "ALLOCATING PROCESS " << request.processID << "\n";
-            // std::cout << "---------------------------------------------------\n";
+            // Allocates a process using First Fit, then returns a code
+            // Return code is saved in stats for First Fit
             returnCode = firstFit.allocateMem(request.processID, request.unitsRequested, ffStats);
             ffStats.logRequest(returnCode);
             ffStats.logFragments(firstFit.fragmentCount(), firstFit.sysMemory.size());
-            //ffStats.logFragments(static_cast<double>(firstFit.fragmentCount()) / static_cast<double>(firstFit.sysMemory.size()));
-            // std::cout << "FIRST FIT Nodes traversed: " << returnCode << "\n";
 
+            // Allocates a process using Best Fit, then returns a code
+            // Return code is saved in stats for Best Fit
             returnCode = bestFit.allocateMem(request.processID, request.unitsRequested, bfStats);
             bfStats.logRequest(returnCode);
             bfStats.logFragments(bestFit.fragmentCount(), bestFit.sysMemory.size());
-            // std::cout << "BEST FIT Nodes traversed: " << returnCode << "\n\n";
         }
         // else, request generated was a deallocation
         else {
-            // std::cout << "---------------------------------------------------\n";
-            std::cout << "DEALLOCATING PROCESS " << request.processID << "\n";
-            // std::cout << "---------------------------------------------------\n";
-            int success = firstFit.deallocateMem(request.processID);
-            // std::cout << "FIRST FIT RETURN CODE: " << success << "\n";
-
+            // Deallocates a process for First Fit
+            success = firstFit.deallocateMem(request.processID);
+            ffStats.logRequest(success);
+            // Deallocates a process for Best Fit
             success = bestFit.deallocateMem(request.processID);
-            // std::cout << "BEST FIT RETURN CODE: " << success << "\n\n";
-;        }
-        // if true, call allocation function
-
-        // else, call deallocation function
+            bfStats.logRequest(success);
+        }
     }
-
-    // AT THE END, USE firstFit and bestFit to call the fragmentwhatever function
-    // it will go down the list and count the number of fragments sizes 1 or 2
     
-    std::cout << "-------------------- FIRST FIT ----------------------\n";
-    // for(auto node : firstFit.sysMemory){
-    //     std::cout << "Node Address: " << node.nodeAddress << " Process ID: " << node.processID << "\n";
-    // }
+    std::cout << "------------------- FIRST FIT ---------------------\n";
     ffStats.printStats();
 
-    std::cout << "-------------------- BEST FIT ----------------------\n";
-    // for(auto node : bestFit.sysMemory){
-    //     std::cout << "Node Address: " << node.nodeAddress << " Process ID: " << node.processID << "\n";
-    // }
+    std::cout << "-------------------- BEST FIT ---------------------\n";
     bfStats.printStats();
-
-    // std::cout << "-------------------- FIRST FIT NUMBER OF FRAGMENTS ----------------------\n";
-    // std::cout << "Number of fragments: " << firstFit.fragmentCount() << "\n";
-    // std::cout << "-------------------- BEST FIT NUMBER OF FRAGMENTS ----------------------\n";
-    // std::cout << "Number of fragments: " << bestFit.fragmentCount() << "\n";
 }
